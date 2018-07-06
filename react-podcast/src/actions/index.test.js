@@ -1,14 +1,23 @@
 import axios from 'axios';
-import {fetchTopTags} from './index';
+import {fetchTopTags, FETCH_PODCASTS_TOP} from './index';
 
 describe('Unauthenticated API calls for fetching tags, podcast info', () => {
-    describe('Top Tags should return a list of x top categories', () => {
+    describe('Fetch Top Tags API ', () => {
         jest.mock('axios');
-
-        test('Should fetch a list of x top tags', function() {
+        it('Should be called with the following URL', function() {
             axios.get = jest.fn();
             fetchTopTags();
-            expect(axios.get).toBeCalledWith('https://www.google.com');  
+            expect(axios.get).toBeCalledWith('https://gpodder.net/api/2/tags/21.json');  
+            axios.get.mockReset();
+        });
+
+        it('Should return an object with type and payload of  Axios Promise', () => {
+            axios.get = jest.fn();
+            axios.get.mockReturnValue(expect.any(Promise));
+            var topTags = fetchTopTags();
+            expect(topTags.type).toBe(FETCH_PODCASTS_TOP);
+            expect(topTags.payload).toEqual(expect.any(Promise));
+            axios.get.mockReset();
         });
     });
 });

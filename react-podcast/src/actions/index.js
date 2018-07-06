@@ -2,8 +2,16 @@ import axios from 'axios';
 
 export const FETCH_PODCASTS_TOP = 'fetch_podcasts_top';
 
-const ROOT_URL = "https://gpodder.net/api/2/";
+const ROOT_URL = "https://gpodder.net/";
 
 export function fetchTopTags() {
-    return axios.get('https://www.google.com')
+    const topTags = 'toplist/20.json';
+    const url = `${ROOT_URL}${topTags}`;
+
+    return {
+        type: FETCH_PODCASTS_TOP,
+        payload: axios.get(url) 
+    }; 
+    
+    
 }
