@@ -2,3 +2,9 @@ form a {
     margin-left: 10px;
 }
 
+.podcast_container_item_title {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-size: 0.8em;
+}
+

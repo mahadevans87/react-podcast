@@ -7,7 +7,7 @@ describe('Unauthenticated API calls for fetching tags, podcast info', () => {
         it('Should be called with the following URL', function() {
             axios.get = jest.fn();
             fetchTopTags();
-            expect(axios.get).toBeCalledWith('https://gpodder.net/api/2/tags/21.json');  
+            expect(axios.get).toBeCalledWith('https://gpodder.net/toplist/100.json');  
             axios.get.mockReset();
         });
 
