@@ -22,16 +22,28 @@ describe('Top Podcasts web service', () => {
 });
 
 describe ('Action:FetchPodcastInfo', () => {
-    it('should accept a podcast with a single tag', () => {
-        expect(fetchPodcastInfo).toThrow('tag should be present');
+    it('should accept a podcast with a single feedUrl', () => {
+        expect(fetchPodcastInfo).toThrow('feedUrl should be present');
     });
 
-    it('should return an object with type: FETCH_PODCAST_INFO and payload: tag', () => {
-        let tag = 'sometag';
+    it('should call axios.get with the specified url', () => {
+        axios.get = jest.fn();
+        const feedUrl = 'http://feeds.twit.tv/aaa_video_large';
+        const url = `https://gpodder.net/api/2/data/podcast.json?url=${feedUrl}`;
+        fetchPodcastInfo(feedUrl);
+        expect(axios.get).toBeCalledWith(url);
+        axios.get.mockReset();
+    });
+
+    it('should return an object with type: FETCH_PODCAST_INFO and payload: axios promise', () => {
+        let feedUrl = 'sometag';
+        axios.get = jest.fn();
+        axios.get.mockReturnValue(expect.any(Promise));
         let action = {
             type: FETCH_PODCAST_INFO,
-            payload: tag
+            payload: expect.any(Promise)
         };
-        expect(fetchPodcastInfo(tag)).toEqual(action);
+        expect(fetchPodcastInfo(feedUrl)).toEqual(action);
+        axios.get.mockReset();
     });
 });

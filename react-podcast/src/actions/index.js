@@ -15,12 +15,13 @@ export function fetchTopTags() {
     };     
 }
 
-export function fetchPodcastInfo(tag) {
-    if (!tag) {
-        throw('tag should be present');
+export function fetchPodcastInfo(feedUrl) {
+    if (!feedUrl) {
+        throw('feedUrl should be present');
     }
+    const url = `${ROOT_URL}api/2/data/podcast.json?url=${feedUrl}`;
     return {
         type: FETCH_PODCAST_INFO,
-        payload: tag
+        payload: axios.get(url)
     };
 }

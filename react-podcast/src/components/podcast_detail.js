@@ -1,23 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchPodcastInfo } from '../actions/index';
 
 class PodcastDetail extends Component {
     componentDidMount() {
-        this.props.fetchPodcastInfo(this.props.podcastTag);
+        this.props.fetchPodcastInfo(decodeURIComponent(this.props.match.params.url));
     }
 
     render() {
-        return (
-            <div>
-                {this.props.podcastInfo.title}
-            </div>
-        )
+        if(this.props.podcastInfo) {
+            return (
+                <div>   
+                    {this.props.podcastInfo.title}
+                </div>
+            )
+        } else {
+            return ( 
+                <div> Loading ...</div>
+            );
+        }
     }
 } 
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+
     return {
-        podcastInfo : state.currentPodcastInfo
+        podcastInfo : state.podcasts[decodeURIComponent(ownProps.match.params.url)]
     };
 }
 

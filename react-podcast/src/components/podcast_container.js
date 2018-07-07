@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {fetchTopTags} from '../actions/index';
 import PodcastContainerItem from './podcast_container_item';
+import _ from 'lodash';
 
 class PodcastContainer extends Component {
 
@@ -12,8 +13,8 @@ class PodcastContainer extends Component {
 
     renderPodcastItems() {
         return (
-            this.props.podcasts.map(podcast => {
-               return <PodcastContainerItem title={podcast.title} tag={podcast.tag} logo_url_small={podcast.scaled_logo_url} />
+            _.map(this.props.podcasts, podcast => {
+               return <PodcastContainerItem title={podcast.title} url={podcast.url} logo_url_small={podcast.scaled_logo_url} />
             })
         );
     }
@@ -24,7 +25,7 @@ class PodcastContainer extends Component {
             <div className="container">
                 <h1 className="my-4 text-center text-lg-left">Top Podcasts</h1>
                 <div className="row text-center text-lg-left">
-                    {this.renderPodcastItems()}
+                  {this.renderPodcastItems()}
                 </div>
             </div>
       

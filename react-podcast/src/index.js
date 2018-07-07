@@ -9,13 +9,20 @@ import { createStore, applyMiddleware } from 'redux';
 import promise from 'redux-promise';
 
 import reducers from './reducers';
+import { BrowserRouter,  Route, Switch } from 'react-router-dom';
+import PodcastDetail from './components/podcast_detail';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 
 ReactDOM.render(
-<Provider store={createStoreWithMiddleware(reducers)}>
-    <App />
-</Provider>, 
+    <Provider store={createStoreWithMiddleware(reducers)}>
+        <BrowserRouter>
+            <Switch>
+                <Route path="/podcast/:url" component={PodcastDetail} />
+                <Route path="/" component={App} />
+            </Switch>
+        </BrowserRouter>
+    </Provider>,
     document.getElementById('root'));
 registerServiceWorker();
